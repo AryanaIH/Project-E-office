@@ -1,0 +1,113 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DepartementController;
+use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\JenisSuratController;
+use App\Http\Controllers\TujuanSuratController;
+use App\Http\Controllers\DokumenProyekController;
+
+
+
+Route::get('/', function () {
+    return view('dashboard');
+});
+
+// Route::get('/suratKeluar', function () {
+//     return view('suratKeluar');
+// });
+
+Route::get('/tambahSurat', function () {
+    return view('tambahSurat');
+});
+
+Route::get('/dashboard',[DashboardController::class, 'index']);
+
+Route::get('/masterBarang', function () {
+    return view('MasterData');
+});
+
+Route::get('/departement', function () {
+    return view('departemen');
+});
+
+Route::get('/pengguna', function () {
+    return view('pengguna');
+});
+
+Route::get('/jenis-surat', function () {
+    return view('jenis-surat');
+});
+
+Route::get('/tujuan-surat', function () {
+    return view('tujuan-surat');
+});
+
+Route::get('/dokumen-proyek', function () {
+    return view('dokumen-proyek');
+});
+
+Route::get('/monitoringProyek', function () {
+    return view('monitoringProyek');
+});
+
+Route::get('/laporan', function () {
+    return view('laporan');
+});
+
+Route::get('/pengaturan', function () {
+    return view('pengaturan');
+});
+
+ Route::get('/pra-proyek', function () {
+     return view('pra-proyek');
+ });
+
+use App\Http\Controllers\SuratKeluarController;
+
+Route::get('/suratKeluar', [SuratKeluarController::class, 'index'])->name('surat-keluar.index');
+Route::post('/surat-keluar', [SuratKeluarController::class, 'store'])->name('surat-keluar.store');
+Route::get('/surat-keluar/{id}', [SuratKeluarController::class, 'show'])->name('surat-keluar.show');
+Route::get('/surat-keluar/{id}/download', [SuratKeluarController::class, 'download'])->name('surat-keluar.download');
+
+
+
+use App\Http\Controllers\PraProyekController;
+
+Route::resource('pra-proyek', PraProyekController::class);
+Route::get('pra-proyek/create', [PraProyekController::class, 'create'])->name('pra-proyek.create');
+
+
+
+Route::get('/departement', [DepartementController::class, 'index'])->name('departement.index');
+Route::post('/departement', [DepartementController::class, 'store'])->name('departement.store');
+Route::get('/departement/{id}/edit', [DepartementController::class, 'edit'])->name('departement.edit');
+Route::put('/departement/{id}', [DepartementController::class, 'update'])->name('departement.update');
+Route::delete('/departement/{id}', [DepartementController::class, 'destroy'])->name('departement.destroy');
+
+
+
+Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
+Route::post('/pengguna', [PenggunaController::class, 'store'])->name('pengguna.store');
+Route::put('/pengguna/{id}', [PenggunaController::class, 'update'])->name('pengguna.update');
+Route::delete('/pengguna/{id}', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
+
+
+Route::get('/jenis-surat', [JenisSuratController::class, 'index'])->name('jenis-surat.index');
+Route::post('/jenis-surat', [JenisSuratController::class, 'store'])->name('jenis-surat.store');
+Route::get('/jenis-surat/{id}/edit', [JenisSuratController::class, 'edit'])->name('jenis-surat.edit');
+Route::put('/jenis-surat/{id}', [JenisSuratController::class, 'update'])->name('jenis-surat.update');
+Route::delete('/jenis-surat/{id}', [JenisSuratController::class, 'destroy'])->name('jenis-surat.destroy');
+
+
+Route::get('/tujuan-surat', [TujuanSuratController::class, 'index'])->name('tujuan-surat.index');
+Route::post('/tujuan-surat', [TujuanSuratController::class, 'store'])->name('tujuan-surat.store');
+Route::get('/tujuan-surat/{id}/edit', [TujuanSuratController::class, 'edit'])->name('tujuan-surat.edit');
+Route::put('/tujuan-surat/{id}', [TujuanSuratController::class, 'update'])->name('tujuan-surat.update');
+Route::delete('/tujuan-surat/{id}', [TujuanSuratController::class, 'destroy'])->name('tujuan-surat.destroy');
+Route::get('/tujuan-surat/{id}', [TujuanSuratController::class, 'show'])->name('tujuan-surat.show');
+
+
+
+Route::resource('dokumen-proyek', DokumenProyekController::class);
