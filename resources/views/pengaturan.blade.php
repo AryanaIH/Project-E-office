@@ -7,22 +7,60 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrapper {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #f8f9fa;
+      border-right: 1px solid #dee2e6;
+      flex-shrink: 0;
+      padding-top: 20px;
+    }
+
+    .content {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 2rem;
+      background-color: #f5f5f5;
+    }
+
+    .content-inner {
+      min-height: 100%;
+    }
+
     .card-setting {
       border-radius: 1rem;
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
+
     .form-label {
       font-weight: 500;
     }
   </style>
 </head>
 <body>
-<div class="d-flex">
-  @include('layout.navbar')
 
-  <div class="container mt-4">
-    <h4 class="mb-4 fw-bold">Pengaturan Aplikasi</h4>
+<div class="wrapper">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    @include('layout.navbar') <!-- Include your sidebar/navbar here -->
+  </div>
 
+  <!-- Content Area -->
+  <div class="content">
+    <div class="content-inner">
+      <h4 class="mb-4 fw-bold">Pengaturan Aplikasi</h4>
+      
     <div class="row g-4">
       <!-- Pengaturan Umum -->
       <div class="col-md-6">

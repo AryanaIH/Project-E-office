@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-{
-    Schema::create('pra_proyeks', function (Blueprint $table) {
-        $table->id();
-        $table->string('nama_proyek');
-        $table->string('pengusul');
-        $table->date('tanggal_usulan');
-        $table->string('status')->default('Menunggu Review');
-        $table->text('catatan')->nullable();
-        $table->timestamps();
-    });
-}
+        Schema::create('pra_proyeks', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_proyek');
+            $table->string('pengusul');
+            $table->date('tanggal_usulan'); // nama 'tanggal' di form, tapi di blade pakai 'tanggal_usulan'
+            $table->json('dokumen')->nullable(); // checkbox, jadi array JSON
+            $table->enum('status_dokumen', ['ada', 'belum']);
+            $table->enum('keterangan_status', ['lengkap', 'belum']);
+            $table->enum('status', ['Menunggu Review', 'Disetujui', 'Ditolak'])->default('Menunggu Review');
+            $table->text('catatan')->nullable();
+            $table->timestamps();
+        });
+        
 
     }
 

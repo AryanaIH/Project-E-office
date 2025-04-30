@@ -70,6 +70,8 @@ Route::get('/suratKeluar', [SuratKeluarController::class, 'index'])->name('surat
 Route::post('/surat-keluar', [SuratKeluarController::class, 'store'])->name('surat-keluar.store');
 Route::get('/surat-keluar/{id}', [SuratKeluarController::class, 'show'])->name('surat-keluar.show');
 Route::get('/surat-keluar/{id}/download', [SuratKeluarController::class, 'download'])->name('surat-keluar.download');
+Route::delete('/surat-keluar/{id}', [SuratKeluarController::class, 'destroy'])->name('surat-keluar.destroy'); // ✅ tambahkan ini
+
 
 
 

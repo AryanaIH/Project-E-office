@@ -7,23 +7,71 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrapper {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #f8f9fa;
+      border-right: 1px solid #dee2e6;
+      flex-shrink: 0;
+      padding-top: 20px;
+    }
+
+    .content {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 2rem;
+      background-color: #f5f5f5;
+    }
+
+    .content-inner {
+      min-height: 100%;
+    }
+
     .badge-status {
       font-size: 0.75rem;
       padding: 5px 10px;
       border-radius: 12px;
     }
+
     .progress-bar {
       height: 6px;
       border-radius: 4px;
     }
+
+    .btn-purple {
+      background-color: #6f42c1;
+      color: #fff;
+    }
+
+    .btn-purple:hover {
+      background-color: #5a32a3;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
-<div class="d-flex">
-  @include('layout.navbar')
 
-  <div class="container mt-4">
-    <h4 class="mb-4 fw-bold">Daftar Monitoring Proyek</h4>
+<div class="wrapper">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    @include('layout.navbar') <!-- Sidebar content should be included here -->
+  </div>
+
+  <!-- Konten Scrollable -->
+  <div class="content">
+    <div class="content-inner">
+      <h4 class="mb-4 fw-bold">Daftar Monitoring Proyek</h4>
 
     <!-- Filter -->
     <div class="row g-2 align-items-end mb-4">
@@ -161,7 +209,7 @@
     </div>
 
     <!-- Pagination -->
-    <div class="d-flex justify-content-end mt-3">
+    <div class="d-flex justify-content-center mt-3">
       <nav>
         <ul class="pagination">
           <li class="page-item"><a class="page-link" href="#">«</a></li>
