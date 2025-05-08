@@ -4,131 +4,88 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PraProyek;
-use Carbon\Carbon;
 
 class PraProyekController extends Controller
 {
-    public function index(Request $request)
+    // Tampilkan semua pra-proyek
+    public function index()
     {
-        // Mengambil data pra-proyek dengan paginasi
         $praProyeks = PraProyek::latest()->paginate(10);
-
-        // Pastikan tanggal_usulan tidak null
-        foreach ($praProyeks as $item) {
-            if ($item->tanggal_usulan) {
-                $item->tanggal_usulan = Carbon::parse($item->tanggal_usulan);
-            } else {
-                $item->tanggal_usulan = null;
-            }
-        }
-
         return view('pra-proyek', compact('praProyeks'));
     }
 
-    public function store(Request $request)
+    // Tampilkan form create
+    public function create()
     {
-        // Validasi input
-        $request->validate([
-            'nama_proyek'        => 'required|string|max:255',
-            'pengusul'           => 'required|string|max:255',
-            'tanggal'            => 'required|date',
-            'dokumen'            => 'nullable|array',
-            'dokumen.*'          => 'in:Laporan,Surat,Undangan',  // Validasi dokumen yang dipilih
-            'status_dokumen'     => 'required|in:ada,belum',
-            'keterangan_status'  => 'required|in:lengkap,belum',
-        ]);
-
-        // Menyimpan data pra-proyek
-        PraProyek::create([
-            'kode_proyek'        => $this->generateKodeProyek($request->nama_proyek),
-            'nama_proyek'        => $request->nama_proyek,
-            'pengusul'           => $request->pengusul,
-            'tanggal_usulan'     => $request->tanggal,
-            'dokumen'            => $request->dokumen ?? [],
-            'status_dokumen'     => $request->status_dokumen,
-            'keterangan_status'  => $request->keterangan_status,
-            'status'             => 'Menunggu Review',
-            'catatan'            => null,
-        ]);
-
-        return redirect()->back()->with('success', 'Pra-proyek berhasil disimpan.');
+        return view('pra-proyek.create');
     }
 
+    // Simpan data baru
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama_proyek'       => 'required|string|max:255',
+            'klient'            => 'required|string|max:255',
+            'lokasi'            => 'required|string|max:255',
+            'jenis_proyek'      => 'required|in:master,konsultasi,pengembangan',
+            'tanggal_mulai'     => 'required|date',
+            'tanggal_selesai'   => 'required|date|after_or_equal:tanggal_mulai',
+            'status'            => 'required|in:draft,berjalan,lengkap',
+        ]);
+
+        PraProyek::create($request->all());
+
+        return redirect()->route('pra-proyek.index')->with('success', 'Pra-proyek berhasil disimpan.');
+    }
+
+    // Tampilkan detail pra-proyek
     public function show($id)
     {
         $praProyek = PraProyek::findOrFail($id);
-
-        // Pastikan tanggal_usulan tidak null
-        if ($praProyek->tanggal_usulan) {
-            $praProyek->tanggal_usulan = Carbon::parse($praProyek->tanggal_usulan);
-        } else {
-            $praProyek->tanggal_usulan = null;
-        }
-
-        return view('pra-proyek-show', compact('praProyek'));
+        return view('pra-proyek.show', compact('praProyek'));
     }
 
+    // Tampilkan form edit
     public function edit($id)
     {
         $praProyek = PraProyek::findOrFail($id);
-
-        // Pastikan tanggal_usulan tidak null
-        if ($praProyek->tanggal_usulan) {
-            $praProyek->tanggal_usulan = Carbon::parse($praProyek->tanggal_usulan);
-        } else {
-            $praProyek->tanggal_usulan = null;
-        }
-
-        return view('pra-proyek-edit', compact('praProyek'));
+        return view('pra-proyek.edit', compact('praProyek'));
     }
 
+    // Update data pra-proyek
     public function update(Request $request, $id)
     {
-        // Validasi input
         $request->validate([
-            'nama_proyek'        => 'required|string|max:255',
-            'pengusul'           => 'required|string|max:255',
-            'tanggal'            => 'required|date',
-            'dokumen'            => 'nullable|array',
-            'dokumen.*'          => 'in:Laporan,Surat,Undangan',  // Validasi dokumen yang dipilih
-            'status_dokumen'     => 'required|in:ada,belum',
-            'keterangan_status'  => 'required|in:lengkap,belum',
-            'status'             => 'required|in:Menunggu Review,Disetujui,Ditolak',
-            'catatan'            => 'nullable|string',
+            'nama_proyek'       => 'required|string|max:255',
+            'klient'            => 'required|string|max:255',
+            'lokasi'            => 'required|string|max:255',
+            'jenis_proyek'      => 'required|in:master,konsultasi,pengembangan',
+            'tanggal_mulai'     => 'required|date',
+            'tanggal_selesai'   => 'required|date|after_or_equal:tanggal_mulai',
+            'status'            => 'required|in:draft,berjalan,lengkap',
         ]);
 
         $praProyek = PraProyek::findOrFail($id);
 
-        // Update data pra-proyek
         $praProyek->update([
-            'nama_proyek'        => $request->nama_proyek,
-            'pengusul'           => $request->pengusul,
-            'tanggal_usulan'     => $request->tanggal,
-            'dokumen'            => $request->dokumen ?? [],
-            'status_dokumen'     => $request->status_dokumen,
-            'keterangan_status'  => $request->keterangan_status,
-            'status'             => $request->status,
-            'catatan'            => $request->catatan,
+            'nama_proyek'       => $request->nama_proyek,
+            'klient'            => $request->klient,
+            'lokasi'            => $request->lokasi,
+            'jenis_proyek'      => $request->jenis_proyek,
+            'tanggal_mulai'     => $request->tanggal_mulai,
+            'tanggal_selesai'   => $request->tanggal_selesai,
+            'status'            => $request->status,
         ]);
 
         return redirect()->route('pra-proyek.index')->with('success', 'Pra-proyek berhasil diperbarui.');
     }
 
+    // Hapus pra-proyek
     public function destroy($id)
     {
         $praProyek = PraProyek::findOrFail($id);
         $praProyek->delete();
 
-        return redirect()->back()->with('success', 'Pra-proyek berhasil dihapus.');
-    }
-
-    private function generateKodeProyek($namaProyek)
-    {
-        // Generate kode proyek berdasarkan jumlah proyek yang ada
-        $latest = PraProyek::count() + 1;
-        $kode   = strtoupper(substr($namaProyek, 0, 3));
-        $tahun  = date('Y');
-
-        return sprintf("PRJ-%03d/%s/%s", $latest, $kode, $tahun);
+        return redirect()->route('pra-proyek.index')->with('success', 'Pra-proyek berhasil dihapus.');
     }
 }

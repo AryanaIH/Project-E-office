@@ -70,15 +70,30 @@ Route::get('/suratKeluar', [SuratKeluarController::class, 'index'])->name('surat
 Route::post('/surat-keluar', [SuratKeluarController::class, 'store'])->name('surat-keluar.store');
 Route::get('/surat-keluar/{id}', [SuratKeluarController::class, 'show'])->name('surat-keluar.show');
 Route::get('/surat-keluar/{id}/download', [SuratKeluarController::class, 'download'])->name('surat-keluar.download');
+Route::get('/surat-keluar/{id}/edit', [SuratKeluarController::class, 'edit'])->name('surat-keluar.edit');
+Route::put('/surat-keluar/{id}', [SuratKeluarController::class, 'update'])->name('surat-keluar.update');
 Route::delete('/surat-keluar/{id}', [SuratKeluarController::class, 'destroy'])->name('surat-keluar.destroy'); // ✅ tambahkan ini
-
+Route::get('/surat-keluar/{id}/preview', [SuratKeluarController::class, 'preview'])->name('surat-keluar.preview');
 
 
 
 use App\Http\Controllers\PraProyekController;
 
-Route::resource('pra-proyek', PraProyekController::class);
-Route::get('pra-proyek/create', [PraProyekController::class, 'create'])->name('pra-proyek.create');
+// Halaman utama daftar pra-proyek
+Route::get('/pra-proyek', [PraProyekController::class, 'index'])->name('pra-proyek.index');
+
+// Proses tambah data
+Route::post('/pra-proyek', [PraProyekController::class, 'store'])->name('pra-proyek.store');
+
+// Form edit pra-proyek
+Route::get('/pra-proyek/{id}/edit', [PraProyekController::class, 'edit'])->name('pra-proyek.edit');
+
+// Proses update data
+Route::put('/pra-proyek/{id}', [PraProyekController::class, 'update'])->name('pra-proyek.update');
+
+// Proses hapus data
+Route::delete('/pra-proyek/{id}', [PraProyekController::class, 'destroy'])->name('pra-proyek.destroy');
+
 
 
 
@@ -113,3 +128,17 @@ Route::get('/tujuan-surat/{id}', [TujuanSuratController::class, 'show'])->name('
 
 
 Route::resource('dokumen-proyek', DokumenProyekController::class);
+
+
+use App\Http\Controllers\MonitoringController;
+
+Route::get('/monitoring', [MonitoringController::class, 'monitoring'])->name('monitoring');
+
+use App\Http\Controllers\ImageController;
+
+Route::get('/upload', function () {
+    return view('upload');
+});
+
+Route::post('/upload', [ImageController::class, 'upload'])->name('image.upload');
+

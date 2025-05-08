@@ -2,17 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class surat_keluar extends Model
+class SuratKeluar extends Model
 {
+    use HasFactory;
+
+    protected $table = 'surat_keluar';
+
     protected $fillable = [
         'nomor_surat',
-        'jenis_surat',
         'tanggal_surat',
+        'jenis_surat',
         'perihal',
         'tujuan',
-        'isi',
+        'isi_surat',
         'status',
     ];
 }

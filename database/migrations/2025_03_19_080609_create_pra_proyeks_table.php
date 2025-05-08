@@ -14,17 +14,14 @@ return new class extends Migration
         Schema::create('pra_proyeks', function (Blueprint $table) {
             $table->id();
             $table->string('nama_proyek');
-            $table->string('pengusul');
-            $table->date('tanggal_usulan'); // nama 'tanggal' di form, tapi di blade pakai 'tanggal_usulan'
-            $table->json('dokumen')->nullable(); // checkbox, jadi array JSON
-            $table->enum('status_dokumen', ['ada', 'belum']);
-            $table->enum('keterangan_status', ['lengkap', 'belum']);
-            $table->enum('status', ['Menunggu Review', 'Disetujui', 'Ditolak'])->default('Menunggu Review');
-            $table->text('catatan')->nullable();
+            $table->string('klient')->nullable(); // Menambahkan kolom 'klient'
+            $table->string('lokasi')->nullable(); // Menambahkan kolom 'lokasi'
+            $table->string('jenis_proyek')->nullable(); // Menambahkan kolom 'jenis_proyek'
+            $table->date('tanggal_mulai')->nullable(); // Menambahkan kolom 'tanggal_mulai'
+            $table->date('tanggal_selesai')->nullable(); // Menambahkan kolom 'tanggal_selesai'
+            $table->string('status')->nullable(); // Menambahkan kolom 'status'
             $table->timestamps();
         });
-        
-
     }
 
     /**

@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tujuan_surat', function (Blueprint $table) {
-            $table->string('id_tujuan')->primary(); // ID custom
-            $table->string('nama_penerima');
-            $table->string('instansi')->nullable();
-            $table->string('alamat')->nullable();
-            $table->string('kontak')->nullable();
+        Schema::create('images', function (Blueprint $table) {
+            $table->id();
+            $table->string('url');
+            $table->string('public_id');
             $table->timestamps();
         });
-        
-        
         
     }
 
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tujuan_surat');
+        Schema::dropIfExists('images');
     }
 };

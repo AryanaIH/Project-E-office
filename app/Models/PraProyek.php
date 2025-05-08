@@ -10,18 +10,18 @@ class PraProyek extends Model
     use HasFactory;
 
     protected $fillable = [
+        'kode_proyek',
         'nama_proyek',
-        'pengusul',
-        'tanggal_usulan',
-        'dokumen',
-        'status_dokumen',
-        'keterangan_status',
+        'klient',
+        'lokasi',
+        'jenis_proyek',
+        'tanggal_mulai',
+        'tanggal_selesai',
         'status',
-        'catatan',
     ];
 
     protected $casts = [
-        'dokumen' => 'array', // memastikan dokumen disimpan sebagai array
-        'tanggal_usulan' => 'datetime', // pastikan tanggal disimpan dalam format datetime
+        'tanggal_mulai' => 'datetime',
+        'tanggal_selesai' => 'datetime',
     ];
 }

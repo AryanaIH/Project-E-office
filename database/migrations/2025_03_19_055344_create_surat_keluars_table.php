@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('surat_keluars', function (Blueprint $table) {
+        Schema::create('surat_keluar', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_surat');
             $table->string('jenis_surat');
             $table->date('tanggal_surat');
             $table->string('perihal');
             $table->string('tujuan');
-            $table->text('isi');
+            $table->text('isi_surat');
             $table->string('status')->default('Terkirim');
             $table->timestamps();
         });
+        
         
     }
 
@@ -29,7 +30,8 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {
-        Schema::dropIfExists('surat_keluars');
-    }
+{
+    Schema::dropIfExists('surat_keluar');
+}
+
 };
